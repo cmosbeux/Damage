@@ -137,7 +137,7 @@ Particle Time = Logical True
   Result Variable 3 = String "Damage"
 ```
 
-For boundary conditions, a particle wall can be applied where the Particle should not leave the body (e.g., at the bedrock interface). The complete Solver section can be seen here after:
+The complete Solver section can be seen here after:
 
 ```f90
 Solver 10
@@ -183,3 +183,5 @@ Solver 10
 End
 
 ```
+
+For boundary conditions, a particle wall can be applied where the Particle should not leave the body (e.g., at the bedrock interface). 
