@@ -38,6 +38,85 @@ The `ParticleAdvector` solver relies on the `ParticleUtils` where a source term 
 
 We can call the `ParticleAdvanceTimestep`, which allows particle to move with the velocity field, and a given timestep (defining the path and distance parkoured by the particle). 
 
-The `ParticlePathIntegral` subroutine integrates variable over the path. This is activated by the source term in the `bodyforce`. The source term is evaluated at each node and added to the `TimeIntegVar`. The relevant code for an integral over time is:
+The `ParticlePathIntegral` subroutine integrates variable over the path. This is activated by the source term in the `bodyforce`. The source term is evaluated at each node and added to the `TimeIntegVar`. The relevant code for an integral over time is (`line 5597-5611`):
 
+```
+      ! Path integral over time
+      IF( TimeInteg ) THEN
+        Source(1:n) = ListGetReal( BodyForce,'Particle Time Integral Source', &
+            n, Indexes, Found )
+        IF( Found ) THEN
+          SourceAtPath = SUM( Basis(1:n) * Source(1:n) )
+          IF( UseGradSource ) THEN
+            DO i=1,dim
+              SourceAtPath = SourceAtPath + 0.5*SUM( dBasisdx(1:n,i) * Source(1:n) ) * &
+                  ( PrevCoord(i) - Coord(i) )
+            END DO
+          END IF
+          TimeIntegVar % Values(No) = TimeIntegVar % Values(No) + dtime * SourceAtPath
+        END IF
+      END IF
+```
 
+The code also allos for integral over distance but we do not use it for damage advection. 
+
+## Application to damage
+
+We want to account for the damage creation by using a source term. It can be described in the bodyforce section using the `damage USF` as a source for the Particle Time Integrale variable:
+
+```
+Body Force 1
+  Particle Time Integral Source = Variable "Damage"
+    Real Procedure "USF_Damage" "SourceDamage"
+End
+```
+
+The integral as to be defined as a time integral as the development of the damage is calculated at each timestep, for a given χ (Chi, which can be exported at the dime of the ComputeDevStress solver). 
+
+The solver can be executed at the end of each timestep, when Navier-Stokes and the stresses have been computed. Particle Time integral is one of the internal variable of the ParticleAdvector and can be used for the damage advection. The keyword Result Variable 3 = String "Damage" can be used to export the integrated damage (instead of Particle Time Integral). 
+
+```
+Solver 10
+  Equation = ParticleAdvector
+  Procedure = "ParticleAdvector" "ParticleAdvector"
+
+! Initialize particles at center of elements (as opposed to nodes)
+  Advect Elemental = Logical True
+
+  Reinitialize Particles = Logical False
+  Particle Dt Constant = Logical False
+
+! Timestepping strategy
+  Simulation Timestep Sizes = Logical True
+  Max Timestep Intervals = Integer 5
+
+! Time in average 4 steps in each element
+  Timestep Unisotropic Courant Number = Real 0.25
+  Max Timestep Size = Real 1.0e5
+
+! Give up integration if particles are tool old
+  Max Integration Time = Real 1.0e5
+
+  Velocity Variable Name = String "Flow Solution"
+
+! Integration forward in time (we do not use Runge Kutta)
+  Runge Kutta = Logical False
+! But we add gradient corrections
+  Velocity Gradient Correction = Logical True
+  Source Gradient Correction = Logical True
+
+! Show some info in the end
+  Particle Info = Logical True
+  Particle Time = Logical True
+
+! The internal variables for this solver
+  Variable 1 = String "Particle distance"
+  Variable 2 = String "Particle time"
+  Variable 3 = String "Particle time integral"
+  Variable 4 = String "Particle distance integral"
+  Variable 5 = String "Particle Velocity_Abs"
+  Result Variable 3 = String "Damage"
+End
+```
+
+For boundary conditions, a particle wall can be applied where the Particle should not leave the body (e.g., at the bedrock interface).
