@@ -58,7 +58,7 @@ The `ParticlePathIntegral` subroutine integrates variable over the path. This is
       END IF
 ```
 
-The code also allos for integral over distance but we do not use it for damage advection. 
+The code also allows for integral over distance but we do not use it for damage advection. 
 
 ## Application to damage
 
