@@ -40,7 +40,7 @@ We can call the `ParticleAdvanceTimestep`, which allows particle to move with th
 
 The `ParticlePathIntegral` subroutine integrates variable over the path. This is activated by the source term in the `bodyforce`. The source term is evaluated at each node and added to the `TimeIntegVar`. The relevant code for an integral over time is (`line 5597-5611`):
 
-```
+```f90
       ! Path integral over time
       IF( TimeInteg ) THEN
         Source(1:n) = ListGetReal( BodyForce,'Particle Time Integral Source', &
@@ -64,7 +64,7 @@ The code also allos for integral over distance but we do not use it for damage a
 
 We want to account for the damage creation by using a source term. It can be described in the bodyforce section using the `damage USF` as a source for the Particle Time Integrale variable:
 
-```
+```f90
 Body Force 1
   Particle Time Integral Source = Variable "Damage"
     Real Procedure "USF_Damage" "SourceDamage"
@@ -78,40 +78,40 @@ The solver can be executed at the end of each timestep, when Navier-Stokes and t
 Here we describe line by line the options we use in the solver:
 
 * The particules can be initialized at the center of each element (`Logical True`) or at the node (`Logical False`)
-```
+```f90
 Advect Elemental = Logical True
 ```
 
 * We can decide to either reinitialize the particlue at each timestep or not. 
-```
+```f90
  Reinitialize Particles = Logical False
  Particle Dt Constant = Logical False
 ```
 
 * We can describe the "internal" Timestepping strategy (the maximum number of timestep to backtrace the particule along its path)
-```
+```f90
 Simulation Timestep Sizes = Logical True
 Max Timestep Intervals = Integer 5
 ```
 
 * Time in average 4 steps in each element
-```
+```f90
 Timestep Unisotropic Courant Number = Real 0.25
 Max Timestep Size = Real 1.0e5
 ```
 
 * Give up integration if particles are tool old:
-```
+```f90
 Max Integration Time = Real 1.0e5
 ```
 
 * The velocity variable name can be given so that the particule can follow the flow. In our case, we compute the flow with Stokes and the solution is the `Flow Solution`:
-```
+```f90
 Velocity Variable Name = String "Flow Solution"
 ```
 
 * Runge Kutta can be used for a forward integration in time. In our case we set the parameter to False, as we only backtrace the particules. Gradient and source gradient corrections can be added. This is an alternative way of increasing the accuracy of the integral with respect to the forward Runge Kutta scheme. Here the gradient of the velocity field and the gradient of the source are evaluated at the point of the particle to account for the curvature of the flow. 
-```
+```f90
 Runge Kutta = Logical False
 Velocity Gradient Correction = Logical True
 Source Gradient Correction = Logical True
@@ -119,14 +119,14 @@ Source Gradient Correction = Logical True
 ```
 
 * We can decide to display some info at the end of the solver (optional)
-```
+```f90
 Show some info in the end
 Particle Info = Logical True
 Particle Time = Logical True
 ```
 
 * Some internal variable of the solver can be calculated and given as an output. In our case, the damage is associated to the `particle time integral` with its source term provided in the bodyforce. The `particle time integral` is then copied to the result variable `Damage` so that it can be used to update the source term at the next timestep.
-```
+```f90
 ! The internal variables for this solver
   Variable 1 = String "Particle distance"
   Variable 2 = String "Particle time"
@@ -139,7 +139,7 @@ Particle Time = Logical True
 
 For boundary conditions, a particle wall can be applied where the Particle should not leave the body (e.g., at the bedrock interface). The complete Solver section can be seen here after:
 
-```
+```f90
 Solver 10
   Equation = ParticleAdvector
   Procedure = "ParticleAdvector" "ParticleAdvector"
