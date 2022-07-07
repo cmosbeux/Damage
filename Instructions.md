@@ -4,9 +4,9 @@
 
 From Krug et al. (2014), damage can describe in Elmer/Ice as a scalar value which is advected through the media according to the following advection-reaction equation (with a reaction term set to zero):
 
-∂D/∂t+u ∇D=f(χ),
+$\dfrac{\partial D}{\partial t} + \boldsymbol{u} \nabla D= f(\chi)$,
 
-where u is the velocity vector from the Stokes system, and f(χ) the source term for damage.
+where $\boldsymbol{u}$ is the velocity vector from the Stokes system, and $f(\chi)$ the source term for damage.
 
 # 2.	Semi-Lagrangian Advection
 
@@ -14,21 +14,21 @@ Another solution is to use a semi-Lagrangian particle advection scheme. By defin
 
 For the particle advection we assume that the fields are transported diffusion-free carried by a velocity field u. The particles are initialized at the nodes of the mesh and followed backward in time. When their position backward in time is recovered, it is communicated to the nodes as the value of the convected field. This is done by evaluating the following integral:
 
-r ⃗=(r_0 ) ⃗+∫_0^(-δt)▒u dt.
+$\vec{r} = \vec{r_0}+\int_{0}^{-\delta t} \boldsymbol{u} \ dt$.
 
 When the particles have been advected, the field may be evaluated from 
 
-D=D((r_0 ) ⃗,t)=D(r ⃗,t-δt),
+$D = D (\vec{r_0},t) = D(\vec{r},t-\delta t)$,
 
 where the damage D in each node depends on the initial position and the earlier timestep. 
 
 A source term I(χ) that depends on the evolution of the particle along the path integral can be evaluated over space or time. In our case, that relates to the damage creation over δt.
 
-I_t (χ)= ∫_0^(-δt)▒〖f(χ)〗 dt
+$I_t (\chi)= \int_{0}^{-\delta t} f(\chi) \ dt$
 
 We end up with
 
-D=D((r_0 ) ⃗,t)+ I_t (χ)
+$D=D(\vec{r_0},t)+ I_t (\chi)$
 
 An interpolation scheme is then utilized to estimate the value of the variable at the grid points surrounding the point where the particle originated from. 
 
@@ -73,7 +73,71 @@ End
 
 The integral as to be defined as a time integral as the development of the damage is calculated at each timestep, for a given χ (Chi, which can be exported at the dime of the ComputeDevStress solver). 
 
-The solver can be executed at the end of each timestep, when Navier-Stokes and the stresses have been computed. Particle Time integral is one of the internal variable of the ParticleAdvector and can be used for the damage advection. The keyword Result Variable 3 = String "Damage" can be used to export the integrated damage (instead of Particle Time Integral). 
+The solver can be executed at the end of each timestep, when Navier-Stokes and the stresses have been computed. `Particle Time integral` is one of the internal variable of the `ParticleAdvector` and can be used for the damage advection. The keyword `Result Variable 3 = String "Damage"` can be used to export the integrated damage (instead of Particle Time Integral). 
+
+Here we describe line by line the options we use in the solver:
+
+* The particules can be initialized at the center of each element (`Logical True`) or at the node (`Logical False`)
+```
+Advect Elemental = Logical True
+```
+
+* We can decide to either reinitialize the particlue at each timestep or not. 
+```
+ Reinitialize Particles = Logical False
+ Particle Dt Constant = Logical False
+```
+
+* We can describe the "internal" Timestepping strategy (the maximum number of timestep to backtrace the particule along its path)
+```
+Simulation Timestep Sizes = Logical True
+Max Timestep Intervals = Integer 5
+```
+
+* Time in average 4 steps in each element
+```
+Timestep Unisotropic Courant Number = Real 0.25
+Max Timestep Size = Real 1.0e5
+```
+
+* Give up integration if particles are tool old:
+```
+Max Integration Time = Real 1.0e5
+```
+
+* The velocity variable name can be given so that the particule can follow the flow. In our case, we compute the flow with Stokes and the solution is the `Flow Solution`:
+```
+Velocity Variable Name = String "Flow Solution"
+```
+
+* Runge Kutta can be used for a forward integration in time. In our case we set the parameter to False, as we only backtrace the particules. Gradient and source gradient corrections can be added. This is an alternative way of increasing the accuracy of the integral with respect to the forward Runge Kutta scheme. Here the gradient of the velocity field and the gradient of the source are evaluated at the point of the particle to account for the curvature of the flow. 
+```
+Runge Kutta = Logical False
+Velocity Gradient Correction = Logical True
+Source Gradient Correction = Logical True
+
+```
+
+* We can decide to display some info at the end of the solver (optional)
+```
+Show some info in the end
+Particle Info = Logical True
+Particle Time = Logical True
+```
+
+* Some internal variable of the solver can be calculated and given as an output. In our case, the damage is associated to the `particle time integral` with its source term provided in the bodyforce. The `particle time integral` is then copied to the result variable `Damage` so that it can be used to update the source term at the next timestep.
+```
+! The internal variables for this solver
+  Variable 1 = String "Particle distance"
+  Variable 2 = String "Particle time"
+  Variable 3 = String "Particle time integral"
+  Variable 4 = String "Particle distance integral"
+  Variable 5 = String "Particle Velocity_Abs"
+  
+  Result Variable 3 = String "Damage"
+```
+
+For boundary conditions, a particle wall can be applied where the Particle should not leave the body (e.g., at the bedrock interface). The complete Solver section can be seen here after:
 
 ```
 Solver 10
@@ -117,6 +181,5 @@ Solver 10
   Variable 5 = String "Particle Velocity_Abs"
   Result Variable 3 = String "Damage"
 End
-```
 
-For boundary conditions, a particle wall can be applied where the Particle should not leave the body (e.g., at the bedrock interface).
+```
