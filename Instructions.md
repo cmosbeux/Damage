@@ -32,7 +32,22 @@ $D=D(\vec{r_0},t)+ I_t (\chi)$
 
 An interpolation scheme is then utilized to estimate the value of the variable at the grid points surrounding the point where the particle originated from. 
 
-# 3. Solver details
+# 3. The damage creation
+
+The increase of damage in the media depends on the stress field and occurs when the stress pattern exceeds a damage threshold σ_th (0.01 MPa in Krug et al., 2014). To account for ice heterogeneity, some noise can be introduced on σ_th:σ_th=(σ_th ) ̅+δσ, where δσ⁄(σ_th ) ̅   follows a standard normal distribution with a std = 0.05. The value of this threshold must be discussed accordingly to the toughness of the ice or its tensile strength. 
+
+The source term, can be described as follow:
+
+$f(\chi)= B \cdot \chi(\overline{\sigma},\sigma_{th},D)$,
+
+where $B$ is a damage enhancement factor that needs to be calibrated (around 1-2 MPa$^{-1}$). \chi is called the damage criterion and writes:
+
+$\chi(\overline{\sigma},\sigma_{th},D)= \max⁡(0,\sigma_I/(1-D)-\sigma_{th}$,
+
+where $\sigma_I$ is the maximal principal stress. 
+
+
+# 4. Solver details
 
 The `ParticleAdvector` solver relies on the `ParticleUtils` where a source term can be accounted for by checking the bodyforce `Particle Distance Integral Source` be `Particle Time Integral Source`. A variable that evolves over distance or time, is then created.
 
@@ -60,7 +75,9 @@ The `ParticlePathIntegral` subroutine integrates variable over the path. This is
 
 The code also allows for integral over distance but we do not use it for damage advection. 
 
-## Application to damage
+## Application to damage (how to write a .sif)
+
+### Body Force
 
 We want to account for the damage creation by using a source term. It can be described in the bodyforce section using the `damage USF` as a source for the Particle Time Integrale variable:
 
@@ -71,7 +88,9 @@ Body Force 1
 End
 ```
 
-The integral as to be defined as a time integral as the development of the damage is calculated at each timestep, for a given χ (Chi, which can be exported at the dime of the ComputeDevStress solver). 
+The integral as to be defined as a time integral as the development of the damage is calculated at each timestep, for a given $\chi$ (Chi, which can be exported at the time of the `ComputeDevStress solver`). 
+
+### Solver
 
 The solver can be executed at the end of each timestep, when Navier-Stokes and the stresses have been computed. `Particle Time integral` is one of the internal variable of the `ParticleAdvector` and can be used for the damage advection. The keyword `Result Variable 3 = String "Damage"` can be used to export the integrated damage (instead of Particle Time Integral). 
 
@@ -184,4 +203,12 @@ End
 
 ```
 
+### Boundary Conditions
+
 For boundary conditions, a particle wall can be applied where the Particle should not leave the body (e.g., at the bedrock interface). 
+
+```f90
+Boundary Condition 5 
+  Particle Wall = Logical True
+End
+```
