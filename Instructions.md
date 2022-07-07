@@ -34,7 +34,9 @@ An interpolation scheme is then utilized to estimate the value of the variable a
 
 # 3. The damage creation
 
-The increase of damage in the media depends on the stress field and occurs when the stress pattern exceeds a damage threshold σ_th (0.01 MPa in Krug et al., 2014). To account for ice heterogeneity, some noise can be introduced on σ_th:σ_th=(σ_th ) ̅+δσ, where δσ⁄(σ_th ) ̅   follows a standard normal distribution with a std = 0.05. The value of this threshold must be discussed accordingly to the toughness of the ice or its tensile strength. 
+The increase of damage in the media depends on the stress field and occurs when the stress pattern exceeds a damage threshold $\sigma_{th}$ (0.01 MPa in Krug et al., 2014). 
+
+To account for ice heterogeneity, some noise can be introduced on  $\sigma_{th} = \overline{\sigma_{th}} + \delta \sigma$ , where $\delta \sigma$ follows a standard normal distribution with a $std = 0.05$. The value of this threshold must be discussed accordingly to the toughness of the ice or its tensile strength. 
 
 The source term, can be described as follow:
 
@@ -42,7 +44,7 @@ $f(\chi)= B \cdot \chi(\overline{\sigma},\sigma_{th},D)$,
 
 where $B$ is a damage enhancement factor that needs to be calibrated (around 1-2 MPa$^{-1}$). \chi is called the damage criterion and writes:
 
-$\chi(\overline{\sigma},\sigma_{th},D)= \max⁡(0,\sigma_I/(1-D)-\sigma_{th}$,
+$\chi(\overline{\sigma},\sigma_{th},D)= \max⁡(0,\dfrac{\sigma_I}{(1-D)} - \sigma_{th})$,
 
 where $\sigma_I$ is the maximal principal stress. 
 
