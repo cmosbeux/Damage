@@ -12,7 +12,7 @@ where $\boldsymbol{u}$ is the velocity vector from the Stokes system, and $f(\ch
 
 Another solution is to use a semi-Lagrangian particle advection scheme. By definition, a Lagrangian description of a system focuses on following individual particles along their trajectories (evolving over time) as opposed to the classical Eulerian description used in Elmer, which focuses on the variation of system variables at fixed locations (the grid points). The semi-Lagrangian scheme uses the Eulerian framework but with an Lagrangian discretization of the equations.
 
-For the particle advection we assume that the fields are transported diffusion-free carried by a velocity field u. The particles are initialized at the nodes of the mesh and followed backward in time. When their position backward in time is recovered, it is communicated to the nodes as the value of the convected field. This is done by evaluating the following integral:
+For the particle advection we assume that the fields are transported diffusion-free carried by a velocity field $\boldsymbol{u}$. The particles are initialized at the nodes of the mesh and followed backward in time. When their position backward in time is recovered, it is communicated to the nodes as the value of the convected field. This is done by evaluating the following integral:
 
 $\vec{r} = \vec{r_0}+\int_{0}^{-\delta t} \boldsymbol{u} \ dt$.
 
