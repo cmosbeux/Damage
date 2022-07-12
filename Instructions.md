@@ -141,7 +141,7 @@ Source Gradient Correction = Logical True
 
 * We can decide to display some info at the end of the solver (optional)
 ```f90
-Show some info in the end
+! Show some info in the end
 Particle Info = Logical True
 Particle Time = Logical True
 ```
