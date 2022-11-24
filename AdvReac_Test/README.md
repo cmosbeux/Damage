@@ -29,7 +29,6 @@ This gives us a setup with 2x2x2=8 simulations. We then look at potential proble
 
 The ".sif" file used for each simulation can be found in this repostiroy.
 
-
 #Results
 
 ## 1. No Particle Reinitialization
@@ -72,7 +71,7 @@ Does `Particle Time Integral Source` needs a Nodal variable as an input?
 No problem lined to the parallelisation.
 
 
-##2. Particle Reinitialization
+## 2. Particle Reinitialization
 
 In this case, we set `Reinitialize particles = Logical True`.
 Here, the input variable is `HPart` and the solver outputs the advected value `Hadv`. We then udpate `Hpart= Equals Hadv` in the bodyforce using the `UpdateExported` solver
@@ -80,7 +79,7 @@ Here, the input variable is `HPart` and the solver outputs the advected value `H
 We also compute the `Particle Time Integral` that we define as `Source`.
 
 
-###2.1 Nodal 
+### 2.1 Nodal 
 
 ### 2.1.1  Serial
 
