@@ -52,6 +52,7 @@ In Serial, `Hadv` is well advected with no loss. `Source` evolves but with a sur
 
 No problem linked to the parallelisation.
 
+![Simulation 2](https://github.com/cmosbeux/Damage/blob/main/AdvReac_Test/animations/NoReinit_Nodal_Parallel.gif)
 
 ### 1.2 Elemental
 
