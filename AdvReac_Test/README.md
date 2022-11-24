@@ -1,7 +1,8 @@
-The goal of this test, based on the existing "Advection_Reaction_TestCase" is to test the Semi-Lagrangian solver. 
 
 
 # Simulation Setup
+
+The goal of this test, based on the existing "Advection_Reaction_TestCase" is to test the Semi-Lagrangian solver. 
 
 ## Case description
 
@@ -29,7 +30,7 @@ This gives us a setup with 2x2x2=8 simulations. We then look at potential proble
 
 The ".sif" file used for each simulation can be found in this repostiroy.
 
-#Results
+# Results
 
 ## 1. No Particle Reinitialization
 
