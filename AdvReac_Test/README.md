@@ -16,7 +16,6 @@ Particle Time Integral Source = Variable Hadv
   Real matc "1.1*tx"
 ``` 
 
-
 ## Variations
 
 We test 3 different variations of the solver:
@@ -47,7 +46,7 @@ The input and output variables are Nodal.
 
 In Serial, `Hadv` is well advected with no loss. `Source` evolves but with a surprising "diffusion" upfront the position of the source term `Real matc "1.1*tx"`. Linked to the fact that the `Particle Time Integral` advects the `Source` term that depends itself on `Hadv`? 
 
-
+[![Watch the video](https://github.com/cmosbeux/Damage/blob/main/AdvReac_Test/NoReinit_Nodal_Serial.avi)]
 
 #### 1.1.2 Parallel
 
