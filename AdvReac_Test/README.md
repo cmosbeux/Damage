@@ -29,3 +29,76 @@ This gives us a setup with 2x2x2=8 simulations. We then look at potential proble
 
 The ".sif" file used for each simulation can be found in this repostiroy.
 
+
+#Results
+
+## 1. No Particle Reinitialization
+
+In this case, we set `Reinitialize particles = Logical False`.
+
+Here, the input variable is `HPart` and the solver outputs the advected value `Hadv`. 
+We also compute the `Particle Time Integral` that we define as `Source`.
+
+### 1.1 Nodal
+
+The input and output variables are Nodal.
+ 
+#### 1.1.1 Serial
+
+In Serial, `Hadv` is well advected with no loss. `Source` evolves but with a surprising "diffusion" upfront the position of the source term `Real matc "1.1*tx"`. Linked to the fact that the `Particle Time Integral` advects the `Source` term that depends itself on `Hadv`? 
+
+#### 1.1.2 Parallel
+
+No problem linked to the parallelisation.
+
+
+### 1.2 Elemental
+
+The input variable is nodal, the ouput variable is elemental.
+
+#### 1.2.1 Serial
+
+In Serial, `Hadv` is well advected with no loss. `Source` remains to zero over the entire simulation. Notice that if we change `Hadv` for `Hpart` then we have an evolving source term. 
+
+```f90
+Particle Time Integral Source = Variable Hpart
+  Real matc "1.1*tx"
+```
+
+Does `Particle Time Integral Source` needs a Nodal variable as an input?
+
+#### 1.2.2 Parallel
+
+No problem lined to the parallelisation.
+
+
+##2. Particle Reinitialization
+
+In this case, we set `Reinitialize particles = Logical True`.
+Here, the input variable is `HPart` and the solver outputs the advected value `Hadv`. We then udpate `Hpart= Equals Hadv` in the bodyforce using the `UpdateExported` solver
+
+We also compute the `Particle Time Integral` that we define as `Source`.
+
+
+###2.1 Nodal 
+
+### 2.1.1  Serial
+
+Here we notice a clear numerical diffusion. Each timesetp uses the new interpolated `Hpart` as a restart and we loose information.
+
+### 2.1.2 Parallel
+
+No problem linked to the parallelisation.
+
+###2.2 Elemental
+
+### 2.2.1 Serial
+
+
+
+
+
+
+
+
+
