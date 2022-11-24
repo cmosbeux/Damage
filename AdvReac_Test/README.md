@@ -69,13 +69,14 @@ Particle Time Integral Source = Variable Hpart
 
 Does `Particle Time Integral Source` needs a Nodal variable as an input?
 
-<img src="https://github.com/cmosbeux/Damage/blob/main/AdvReac_Test/animations/NoReinit_Elemental_Serial.gif" width=50% height=50%>
 
+<img src="https://github.com/cmosbeux/Damage/blob/main/AdvReac_Test/animations/NoReinit_Elemental_Serial.gif" width=50% height=50%>
 
 #### 1.2.2 Parallel
 
 No problem lined to the parallelisation.
 
+<img src="https://github.com/cmosbeux/Damage/blob/main/AdvReac_Test/animations/NoReinit_Elemental_Parallel.gif" width=50% height=50%>
 
 ## 2. Particle Reinitialization
 
