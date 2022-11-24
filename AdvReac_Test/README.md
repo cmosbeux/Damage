@@ -46,13 +46,13 @@ The input and output variables are Nodal.
 
 In Serial, `Hadv` is well advected with no loss. `Source` evolves but with a surprising "diffusion" upfront the position of the source term `Real matc "1.1*tx"`. Linked to the fact that the `Particle Time Integral` advects the `Source` term that depends itself on `Hadv`? 
 
-![Simulation 1](https://github.com/cmosbeux/Damage/blob/main/AdvReac_Test/animations/NoReinit_Nodal_Serial.gif)
+<img src="https://github.com/cmosbeux/Damage/blob/main/AdvReac_Test/animations/NoReinit_Nodal_Serial.gif" width=50% height=50%>
 
 #### 1.1.2 Parallel
 
 No problem linked to the parallelisation.
 
-![Simulation 2](https://github.com/cmosbeux/Damage/blob/main/AdvReac_Test/animations/NoReinit_Nodal_Parallel.gif)
+<img src="https://github.com/cmosbeux/Damage/blob/main/AdvReac_Test/animations/NoReinit_Nodal_Parallel.gif" width=50% height=50%>
 
 ### 1.2 Elemental
 
