@@ -121,6 +121,7 @@ Parallelization of the ParticlePathIntegral seems to have indexation problems, t
 
 ### 2.2.1 Serial
 
+Important numerical diffusion linked to the reinitilization and problem with the ParticlePathIntegral that remains to zero. 
 
 <center>
 <img src="https://github.com/cmosbeux/Damage/blob/main/AdvReac_Test/animations/Reinit_Elemental_Parallel.gif" width=50% height=50%>
@@ -128,6 +129,7 @@ Parallelization of the ParticlePathIntegral seems to have indexation problems, t
 
 ### 2.2.2 Parallel
 
+No particular issue linked to the parallelisation. 
 
 <center>
 <img src="https://github.com/cmosbeux/Damage/blob/main/AdvReac_Test/animations/Reinit_Elemental_Parallel.gif" width=50% height=50%>
