@@ -49,7 +49,7 @@ In Serial, `Hadv` is well advected with no loss. `Source` evolves but with a sur
 <figure>
 <img src="https://github.com/cmosbeux/Damage/blob/main/AdvReac_Test/animations/NoReinit_Nodal_Serial.gif" width=50% height=50%>
 <figcaption>Advected field Hadv (left) and ParticlePathIntegral (right). The grey circles on the right show the Hadv field which is used as a source for ParticlePathIntegral.</figcaption>
-<figure>
+</figure>
 #### 1.1.2 Parallel
 
 No problem linked to the parallelisation.
