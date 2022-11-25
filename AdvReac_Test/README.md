@@ -60,6 +60,7 @@ No problem linked to the parallelisation.
 <center>
 <img src="https://github.com/cmosbeux/Damage/blob/main/AdvReac_Test/animations/NoReinit_Nodal_Parallel.gif" width=50% height=50%>
 </center>
+
 ### 1.2 Elemental
 
 The input variable is nodal, the ouput variable is elemental.
