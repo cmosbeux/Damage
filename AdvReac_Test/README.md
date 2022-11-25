@@ -46,8 +46,10 @@ The input and output variables are Nodal.
 
 In Serial, `Hadv` is well advected with no loss. `Source` evolves but with a surprising "diffusion" upfront the position of the source term `Real matc "1.1*tx"`. Linked to the fact that the `Particle Time Integral` advects the `Source` term that depends itself on `Hadv`? 
 
+<figure>
 <img src="https://github.com/cmosbeux/Damage/blob/main/AdvReac_Test/animations/NoReinit_Nodal_Serial.gif" width=50% height=50%>
-
+<figcaption>Advected field Hadv (left) and ParticlePathIntegral (right). The grey circles on the right show the Hadv field which is used as a source for ParticlePathIntegral.</figcaption>
+<figure>
 #### 1.1.2 Parallel
 
 No problem linked to the parallelisation.
@@ -90,19 +92,30 @@ We also compute the `Particle Time Integral` that we define as `Source`.
 
 ### 2.1.1  Serial
 
-Here we notice a clear numerical diffusion. Each timesetp uses the new interpolated `Hpart` as a restart and we loose information.
+Here we notice a clear numerical diffusion. Each timesetp uses the new interpolated `Hpart` as a restart and we loose information. The ParticlePathIntegral seems to work great.
+
+<img src="https://github.com/cmosbeux/Damage/blob/main/AdvReac_Test/animations/Reinit_Nodal_Serial.gif" width=50% height=50%>
 
 ### 2.1.2 Parallel
 
-No problem linked to the parallelisation.
+Parallelization of the ParticlePathIntegral seems to have indexation problems, the field directly evolves in a "speckled" pattern.
 
-###2.2 Elemental
+<img src="https://github.com/cmosbeux/Damage/blob/main/AdvReac_Test/animations/Reinit_Nodal_Serial.gif" width=50% height=50%>
+
+
+### 2.2 Elemental
+
+<img src="https://github.com/cmosbeux/Damage/blob/main/AdvReac_Test/animations/Reinit_Nodal_Parallel.gif" width=50% height=50%>
 
 ### 2.2.1 Serial
 
 
+<img src="https://github.com/cmosbeux/Damage/blob/main/AdvReac_Test/animations/Reinit_Elemental_Serial.gif" width=50% height=50%>
+
+### 2.2.2 Parallel
 
 
+<img src="https://github.com/cmosbeux/Damage/blob/main/AdvReac_Test/animations/Reinit_Elemental_Parallel.gif" width=50% height=50%>
 
 
 
