@@ -47,15 +47,19 @@ The input and output variables are Nodal.
 In Serial, `Hadv` is well advected with no loss. `Source` evolves but with a surprising "diffusion" upfront the position of the source term `Real matc "1.1*tx"`. Linked to the fact that the `Particle Time Integral` advects the `Source` term that depends itself on `Hadv`? 
 
 <figure>
+<center>
 <img src="https://github.com/cmosbeux/Damage/blob/main/AdvReac_Test/animations/NoReinit_Nodal_Serial.gif" width=50% height=50%>
-<figcaption>Advected field Hadv (left) and ParticlePathIntegral (right). The grey circles on the right show the Hadv field which is used as a source for ParticlePathIntegral.</figcaption>
+<figcaption>Fig. Advected field Hadv (left) and ParticlePathIntegral (right). The grey circles on the right show the Hadv field which is used as a source for ParticlePathIntegral.</figcaption>
+</center>
 </figure>
+
 #### 1.1.2 Parallel
 
 No problem linked to the parallelisation.
 
+<center>
 <img src="https://github.com/cmosbeux/Damage/blob/main/AdvReac_Test/animations/NoReinit_Nodal_Parallel.gif" width=50% height=50%>
-
+</center>
 ### 1.2 Elemental
 
 The input variable is nodal, the ouput variable is elemental.
@@ -71,8 +75,9 @@ Particle Time Integral Source = Variable Hpart
 
 Does `Particle Time Integral Source` needs a Nodal variable as an input?
 
-
+<center>
 <img src="https://github.com/cmosbeux/Damage/blob/main/AdvReac_Test/animations/NoReinit_Elemental_Serial.gif" width=50% height=50%>
+</center>
 
 #### 1.2.2 Parallel
 
@@ -94,29 +99,38 @@ We also compute the `Particle Time Integral` that we define as `Source`.
 
 Here we notice a clear numerical diffusion. Each timesetp uses the new interpolated `Hpart` as a restart and we loose information. The ParticlePathIntegral seems to work great.
 
+<center>
 <img src="https://github.com/cmosbeux/Damage/blob/main/AdvReac_Test/animations/Reinit_Nodal_Serial.gif" width=50% height=50%>
+</center>
 
 ### 2.1.2 Parallel
 
 Parallelization of the ParticlePathIntegral seems to have indexation problems, the field directly evolves in a "speckled" pattern.
 
-<img src="https://github.com/cmosbeux/Damage/blob/main/AdvReac_Test/animations/Reinit_Nodal_Serial.gif" width=50% height=50%>
-
+<center>
+<img src="https://github.com/cmosbeux/Damage/blob/main/AdvReac_Test/animations/Reinit_Nodal_Parallel.gif" width=50% height=50%>
+</center>
 
 ### 2.2 Elemental
 
-<img src="https://github.com/cmosbeux/Damage/blob/main/AdvReac_Test/animations/Reinit_Nodal_Parallel.gif" width=50% height=50%>
+
+<center>
+<img src="https://github.com/cmosbeux/Damage/blob/main/AdvReac_Test/animations/Reinit_Elemental_Serial.gif" width=50% height=50%>
+</center>
 
 ### 2.2.1 Serial
 
 
-<img src="https://github.com/cmosbeux/Damage/blob/main/AdvReac_Test/animations/Reinit_Elemental_Serial.gif" width=50% height=50%>
+<center>
+<img src="https://github.com/cmosbeux/Damage/blob/main/AdvReac_Test/animations/Reinit_Elemental_Parallel.gif" width=50% height=50%>
+</center>
 
 ### 2.2.2 Parallel
 
 
+<center>
 <img src="https://github.com/cmosbeux/Damage/blob/main/AdvReac_Test/animations/Reinit_Elemental_Parallel.gif" width=50% height=50%>
-
+</center>
 
 
 
