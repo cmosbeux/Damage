@@ -8,8 +8,10 @@ The goal of this test, based on the existing "Advection_Reaction_TestCase" is to
 
 The case consists in a 3 disc-shapes that are turning with a constant orbit given by a circular velocity field. We consider two metrics:
 
-1) the pure advection of theses shapes: there we look for methods that minimize numerical diffusion 
-2) a source term that is a function of these evolving shape, i.e. a source term that depends on the evolution of the particle along the path integral over time. We define it in the body force as
+1) the pure advection of theses shapes: there we look for methods that minimize numerical diffusion. The variable is named `Hadv`
+2) an advection that is a function of these evolving shape, i.e. a source term that depends on the evolution of the particle along the path integral over time. The Variable is named `Source`. 
+
+We define the source term in the body force as
 
 ```f90
 Particle Time Integral Source = Variable Hadv
@@ -44,7 +46,7 @@ The input and output variables are Nodal.
  
 #### 1.1.1 Serial
 
-In Serial, `Hadv` is well advected with no loss. `Source` evolves but with a surprising "diffusion" upfront the position of the source term `Real matc "1.1*tx"`. Linked to the fact that the `Particle Time Integral` advects the `Source` term that depends itself on `Hadv`? 
+In Serial, `Hadv` is well advected with no loss. `ParticlePathIntegral` evolves upfront the position of the source term `Real matc "1.1*tx"`. Linked to the fact that the `Particle Time Integral` advects the `Source` term that depends itself on `Hadv`.
 
 <figure>
 <center>
@@ -135,6 +137,15 @@ No particular issue linked to the parallelisation.
 <img src="https://github.com/cmosbeux/Damage/blob/main/AdvReac_Test/animations/Reinit_Elemental_Parallel.gif" width=50% height=50%>
 </center>
 
+# Restarts
+
+Here we check how the different implementations handle restart files. We show one example of a problem linked to the restart, i.e. the `ParticlePathIntegral` that does not account for initial conditions. For that, we restart the simulation at half-time (after a rotation of 180 degree). 
+
+The restart is executed from the cass 1.1.1 (i.e. No Reinitialisation / Nodal / Serial).
+
+<center>
+<img src="https://github.com/cmosbeux/Damage/blob/main/AdvReac_Test/animations/Restart_Reinit_Nodal_Serial.gif" width=50% height=50%>
+</center>
 
 
 
