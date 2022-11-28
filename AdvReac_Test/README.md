@@ -53,7 +53,7 @@ The input and output variables are Nodal.
  
 #### 1.1.1 Serial
 
-In Serial, `Hadv` is well advected with no loss. `ParticlePathIntegral` evolves upfront the position of the source term `Real matc "1.1*tx"`. Linked to the fact that the `Particle Time Integral` advects the `Source` term that depends itself on `Hadv`.
+In Serial, `Hadv` is well advected with no loss. `ParticlePathIntegral` evolves upfront the position of the source term `Real matc "1.1*tx"`. Partially linked to the fact that the `Particle Time Integral` advects the `Source` term that depends itself on `Hadv`; but the upfront position looks larger than a1 timestep advection.
 
 <figure>
 <center>
