@@ -141,11 +141,12 @@ No particular issue linked to the parallelisation.
 
 Here we check how the different implementations handle restart files. We show one example of a problem linked to the restart, i.e. the `ParticlePathIntegral` that does not account for initial conditions. For that, we restart the simulation at half-time (after a rotation of 180 degree). 
 
-The restart is executed from the cass 1.1.1 (i.e. No Reinitialisation / Nodal / Serial).
-
+The restart is executed from the cass 1.1.1 (i.e. No Reinitialisation / Nodal / Serial). Problem: the "input" variable is intialized with `Particle Time Integral = Equals Source`. `Source` is the result of the previous simulation but is not accounted for.
 <center>
 <img src="https://github.com/cmosbeux/Damage/blob/main/AdvReac_Test/animations/Restart_Reinit_Nodal_Serial.gif" width=50% height=50%>
 </center>
+
+Currently, the `SUBROUTINE ParticlePathIntegral` does not initialize the particle to an inital condition, integrating this to the subroutine would be very useful.
 
 
 
