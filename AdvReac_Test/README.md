@@ -2,7 +2,13 @@
 
 # Simulation Setup
 
-The goal of this test, based on the existing "Advection_Reaction_TestCase" is to test the Semi-Lagrangian solver. 
+The goal of this test, based on the existing "Advection_Reaction_TestCase" is to test the Semi-Lagrangian solver. Here is a recapitulative table of the simulations:
+
+<figure>
+<center>
+<img src="https://github.com/cmosbeux/Damage/blob/main/AdvReac_Test/recap_table.png" width=50% height=50%>
+</center>
+</figure>
 
 ## Case description
 
@@ -91,7 +97,7 @@ No problem lined to the parallelisation.
 ## 2. Particle Reinitialization
 
 In this case, we set `Reinitialize particles = Logical True`.
-Here, the input variable is `HPart` and the solver outputs the advected value `Hadv`. We then udpate `Hpart= Equals Hadv` in the bodyforce using the `UpdateExported` solver
+Here, the input variable is `HPart` and the solver outputs the advected value `Hadv`. We then udpate `Hpart= Equals Hadv` in the bodyforce using the `UpdateExported` solver. 
 
 We also compute the `Particle Time Integral` that we define as `Source`.
 
