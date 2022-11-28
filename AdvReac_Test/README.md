@@ -36,7 +36,7 @@ This gives us a setup with 2x2x2=8 simulations. We then look at potential proble
 
  
 
-The ".sif" file used for each simulation can be found in this repostiroy.
+The folder containing the ".sif" files, USFs, and the mesh  used for each simulation can be found in this repostiroy under the name "AdvReac_TestCase.REF".
 
 # Results
 
