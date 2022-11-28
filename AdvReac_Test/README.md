@@ -6,7 +6,7 @@ The goal of this test, based on the existing "Advection_Reaction_TestCase" is to
 
 <figure>
 <center>
-<img src="https://github.com/cmosbeux/Damage/blob/main/AdvReac_Test/recap_table.png" width=50% height=50%>
+<img src="https://github.com/cmosbeux/Damage/blob/main/AdvReac_Test/Recap_table.png" width=50% height=50%>
 </center>
 </figure>
 
