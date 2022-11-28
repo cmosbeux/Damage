@@ -2,13 +2,7 @@
 
 # Simulation Setup
 
-The goal of this test, based on the existing "Advection_Reaction_TestCase" is to test the Semi-Lagrangian solver. Here is a recapitulative table of the simulations:
-
-<figure>
-<center>
-<img src="https://github.com/cmosbeux/Damage/blob/main/AdvReac_Test/Recap_table.png" width=75% height=75%>
-</center>
-</figure>
+The goal of this test, based on the existing "Advection_Reaction_TestCase" is to test the Semi-Lagrangian solver.
 
 ## Case description
 
@@ -32,8 +26,15 @@ We test 3 different variations of the solver:
 2) Nodal vs. Elemental Advection
 3) Particle reinitialisation vs No particle reinitialisation
 
+This gives us a setup with 2x2x2=8 simulations. We then look at potential problems linked to each solution. Here is a recapitulative table of the simulations:
 
-This gives us a setup with 2x2x2=8 simulations. We then look at potential problems linked to each solution. 
+<figure>
+<center>
+<img src="https://github.com/cmosbeux/Damage/blob/main/AdvReac_Test/Recap_table.png" width=75% height=75%>
+</center>
+</figure>
+
+ 
 
 The ".sif" file used for each simulation can be found in this repostiroy.
 
