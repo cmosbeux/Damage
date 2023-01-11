@@ -22,9 +22,9 @@ Particle Time Integral Source = Variable Hadv
 
 We test 3 different variations of the solver:
 
-1) Serial vs. Parallel (2 partitions)
-2) Nodal vs. Elemental Advection
-3) Particle reinitialisation vs No particle reinitialisation
+1) Serial vs. Parallel (2 partitions) (no change in the sif but we have a "serial" mesh and a "2-partition" mesh)
+2) Nodal vs. Elemental Advection (sif files labelled " Nodal/Elem")
+3) Particle reinitialisation vs No particle reinitialisation (sif files labelled "Reinit/NoReinit")
 
 This gives us a setup with 2x2x2=8 simulations. We then look at potential problems linked to each solution. Here is a recapitulative table of the simulations:
 
