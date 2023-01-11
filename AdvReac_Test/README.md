@@ -97,10 +97,12 @@ No problem lined to the parallelisation.
 
 ## 2. Particle Reinitialization
 
-> [!WARNING]:diffusion related to reinitialization is inherent to the method. This is because reinitialization requires to reinterploate the input field to the particles. 
+> ```diff
+>  - **⚠ WARNING:** :diffusion related to reinitialization is inherent to the method. This is because reinitialization requires to reinterploate the input field to the particles. 
 > Diffusion should decrease with mesh size.
 > Diffusion can be decreases when following particles with very long timesteps. 
 > The reinitialization should be avoided if possible (no reinitialization every timestep).
+> ```
  
 In this case, we set `Reinitialize particles = Logical True`.
 Here, the input variable is `HPart` and the solver outputs the advected value `Hadv`. We then udpate `Hpart= Equals Hadv` in the bodyforce using the `UpdateExported` solver. 
