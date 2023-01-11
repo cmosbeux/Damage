@@ -97,7 +97,7 @@ No problem lined to the parallelisation.
 
 ## 2. Particle Reinitialization
 
-> **WARNING**:diffusion related to reinitialization is inherent to the method. This is because reinitialization requires to reinterploate the input field to the particles. 
+> [!WARNING]:diffusion related to reinitialization is inherent to the method. This is because reinitialization requires to reinterploate the input field to the particles. 
 > Diffusion should decrease with mesh size.
 > Diffusion can be decreases when following particles with very long timesteps. 
 > The reinitialization should be avoided if possible (no reinitialization every timestep).
