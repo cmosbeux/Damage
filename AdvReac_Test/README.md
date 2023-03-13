@@ -1,4 +1,9 @@
+# A few hint on the ParticleAdvectorSolver
 
+*Nodal* particles sometimes have problems in 3D, because at the surface velocity may point of of mesh. 
+*Elemental* is more robust in this way but looks bad to the eye
+*Discontinous Galerkin*: Not exactly DG since the initial location is actually on the gaussian points.
+*Integration Point*: No additional benefits
 
 # Simulation Setup
 
