@@ -2,10 +2,10 @@
 
 ## Type of particle:
 
-1)*Nodal* particles sometimes have problems in 3D, because at the surface velocity may point of of mesh. 
-2)*Elemental* is more robust in this way but looks bad to the eye
-3)*Discontinous Galerkin*: Not exactly DG since the initial location is actually on the gaussian points.
-4)*Integration Point*: No additional benefits
+1) `Nodal` particles sometimes have problems in 3D, because at the surface velocity may point of of mesh. 
+2) `Elemental` is more robust in this way but looks bad to the eye
+3) `Discontinous Galerkin`: Not exactly DG since the initial location is actually on the gaussian points.
+4) `Integration Point`: No additional benefits
 
 ## A few additional keywords
 
