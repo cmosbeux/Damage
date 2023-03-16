@@ -1,11 +1,18 @@
-# A few hint on the ParticleAdvectorSolver
+# I. A few hint on the ParticleAdvectorSolver
 
-*Nodal* particles sometimes have problems in 3D, because at the surface velocity may point of of mesh. 
-*Elemental* is more robust in this way but looks bad to the eye
-*Discontinous Galerkin*: Not exactly DG since the initial location is actually on the gaussian points.
-*Integration Point*: No additional benefits
+## Type of particle:
 
-# Simulation Setup
+1)*Nodal* particles sometimes have problems in 3D, because at the surface velocity may point of of mesh. 
+2)*Elemental* is more robust in this way but looks bad to the eye
+3)*Discontinous Galerkin*: Not exactly DG since the initial location is actually on the gaussian points.
+4)*Integration Point*: No additional benefits
+
+## A few additional keywords
+
+`Source Time Correction = Logical True`: when estimating the given source and facing dependencies automatically chooses old time from transient simulation in correct ratio.
+
+
+# II.  Simulation Setup
 
 The goal of this test, based on the existing "Advection_Reaction_TestCase" is to test the Semi-Lagrangian solver.
 
