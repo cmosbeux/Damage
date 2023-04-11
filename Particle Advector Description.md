@@ -1,10 +1,10 @@
 # Particle Advector 
 
 ## 1. Main routine 
-The `ParticleAdvector` calculates the advection of fields using particle tracking. Given a field of some quantity (damage for example) and a transport field (velocity), this subroutine calculates how that quantity moves over time based on the velocityfield. 
 
+The `ParticleAdvector` is used to for advecting fields in time using particles to follow them backwards in time, and taking the field value from the given point. This method should overcome most diffusion problems. It calculates the advection of fields using particle tracking. Given a field of some quantity (damage for example) and a transport field (velocity), this subroutine calculates how that quantity moves over time based on the velocityfield. 
 
-At first, the code initializes the particles. The subroutines then loops over a specified number of timesteps and calculates the timestep size at each iteration.
+The code loops over the time steps, updating the particle coordinates based on their velocities and the time step size. It also calculates the field value at the particle location by interpolating it from the FE mesh. If the particle goes outside the mesh, the subroutine tries to reinitialize the particle at the closest mesh point.
 
 The subroutine involves updating the particle positions based on the field being advected. This is done using an interpolation method to estimate the field values at each particle position, and then updating the particle position based on the velocity field.
 
