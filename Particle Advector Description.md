@@ -185,5 +185,7 @@ If `USeGradVelo` is true, the velocity is approximaterd by a first-order taylor 
       PRINT *,'New lost particles:',NewLost
       PRINT *,'New fixed velo particles:',FixedLost
     END IF
+    
+END SUBROUTINE SetParticleVelocities
 ```
 
