@@ -12,7 +12,7 @@ The subroutine involves updating the particle positions based on the field being
 
 The subroutine is used to setup the velocities of each particle. 
 
-```fortran90
+```f90
 SUBROUTINE SetParticleVelocities( FirstStep )
     LOGICAL :: FirstStep
     
@@ -26,7 +26,7 @@ The subroutine is only called the first time. It then loops over the particle an
  If the has moved and is still on an element, the subroutine retrieves the velocity at the particle's current position from the mesh.
 
 
-```fortran90
+```f90
  IF( .NOT. Visited ) THEN
       Mesh => GetMesh()
       n = Mesh % MaxElementNodes
