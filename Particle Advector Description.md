@@ -104,7 +104,7 @@ If the particle has moved and is still on an element, the subroutine retrieves t
 
 The element index containing the particle is retrieved and its velocity is only computed if the particle has moved.
 
-```fortran90
+```f90
       ElementIndex = GetParticleElement( Particles, No )
       IF( ElementIndex == 0 ) THEN
         Particles % Status(No) = PARTICLE_LOST
@@ -143,10 +143,11 @@ Element info and particle coordinates are retrieved.
         NewLost(2) = NewLost(2) + 1
         CYCLE
       END IF
+```
 
 If `USeGradVelo` is true, the velocity is approximaterd by a first-order taylor series of the velocity field, accounting that velocity field may vary spatially. This approximation assumes that the veliocity field is smooth and continously differentiable.  
 
-```fortran90
+```f90
       IF( UseGradVelo ) THEN
         CALL GetVectorFieldInMesh(VeloVar,BulkElement, Basis, VeloAtPoint, &
             dBasisdx, GradVeloAtPoint )
