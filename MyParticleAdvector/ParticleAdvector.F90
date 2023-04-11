@@ -43,7 +43,7 @@
 !> Module including generic utilities for particle dynamics and tracking.
 !-----------------------------------------------------------------------------
  
-MODULE ParticleUtils
+MODULE MyParticleUtils
   
   USE DefUtils
   USE Lists
