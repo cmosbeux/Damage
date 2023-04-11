@@ -63,12 +63,13 @@ The subroutine is only called the first time. It then loops over the particle an
     END IF 
       
 ```
-
-If the particle has moved and is still on an element, the subroutine retrieves the velocity at the particle's current position from the mesh. 
-
+ 
 The velocity gradient correction term accounts for the variation of the velocity field across a particle's path and is used to improve the accuracy of the particle tracking simulation. However, in the context of the RK2 method, this term introduces additional numerical errors because the velocity gradient correction term is quadratic in the velocity field. The RK2 method already has inherent quadratic terms, and the addition of the quadratic velocity gradient correction term can cause numerical instability and inaccuracies. 
 
-```fortran90
+
+If the particle has moved and is still on an element, the subroutine retrieves the velocity at the particle's current position from the mesh. THis is done after some initializations.
+
+```f90
     Coordinate => Particles % Coordinate
     Velocity => Particles % Velocity
     Coord = 0.0_dp
@@ -87,7 +88,7 @@ The velocity gradient correction term accounts for the variation of the velocity
   ```
   Now we will loop over the particles and check it is not lost.
   
-  ```fortran90
+  ```f90
   
     DO No = 1, Particles % NumberOfParticles
       Status = GetParticleStatus( Particles, No )
