@@ -4652,17 +4652,17 @@ RETURN
   FUNCTION minmod(GradPot) RESULT(MinGrad)
   
   REAL(KIND=dp), DIMENSION(:), INTENT(IN) :: GradPot
-  REAL(KIND=dp) :: MinGrad, sign, CurrentSign
+  REAL(KIND=dp) :: MinGrad, signref, CurrentSign
   INTEGER :: i, Dim
   
   Dim = SIZE(GradPot)
-  sign = SIGN(1.0_dp,GradPot(1))
+  signref = SIGN(1.0_dp,GradPot(1))
   MinGrad = ABS(GradPot(1))
   
   ! The function loops over all the gradient values to check whether their signs match the sign of the minimum value
   DO i=2,dim
     CurrentSign = SIGN(1.0_dp,GradPot(i))
-    IF(CurrentSign .NE. Sign) THEN
+    IF(CurrentSign .NE. Signref) THEN
       MinGrad = 0.0_dp
       EXIT
     ELSE
@@ -4670,7 +4670,7 @@ RETURN
     END IF
   END DO
   
-  MinGrad = sign * MinGrad
+  MinGrad = signref * MinGrad
   END FUNCTION minmod
   
   
