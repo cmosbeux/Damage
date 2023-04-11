@@ -43,7 +43,7 @@
 !> Module including generic utilities for particle dynamics and tracking.
 !-----------------------------------------------------------------------------
  
-MODULE ParticleUtils
+MODULE MyParticleUtils
   
   USE DefUtils
   USE Lists
@@ -4583,7 +4583,7 @@ RETURN
     
     TYPE(Variable_t), POINTER :: Var
     TYPE(Element_t) :: CurrentElement
-    REAL(KIND=dp) :: Basis(:), Pot 
+    REAL(KIND=dp) :: Basis(:), Pot, limiter 
     REAL(KIND=dp), OPTIONAL :: dBasisdx(:,:), GradPot(:)
     
     TYPE(Mesh_t), POINTER :: Mesh
@@ -4628,9 +4628,51 @@ RETURN
       END DO
     END IF
     
+    !Cy: Apply gradient correction to Pot
+    limiter = minmod(GradPot)
+    
+    ! correct the localfield based on the gradient/variation of the solution
+    ! we divide by the gradient to scale the solution (i.e. no grid dependent)
+    DO i=1,n
+      LocalField(i) = LocalField(i) - 0.5*limiter*(
+        (Pot - LocalField(i))/Basis(i) - (LocalField(i) - LocalField(1))/Basis(1))
+    END DO
+  
+   !Cy Re-compute Pot using corrected LocalField
+   Pot = SUM( Basis(1:n) * LocalField(1:n) )
+  
+    
   END SUBROUTINE GetScalarFieldInMesh
-
-
+  
+  !-------------------------------------------------------------------------
+  !> This function is a slope limiter using the positive and negative gradient 
+  !> and returns the minimum of the two
+  !-------------------------------------------------------------------------
+  
+  FUNCTION minmod(GradPot) RESULT(MinGrad)
+  
+  REAL(KIND=dp), DIMENSION(:), INTENT(IN) :: GradPot
+  REAL(KIND=dp) :: MinGrad, sign, CurrentSign
+  INTEGER :: i, Dim
+  
+  Dim = SIZE(GradPot)
+  sign = SIGN(1.0_dp,GradPot(1))
+  MinGrad = ABS(GradPot(1))
+  
+  ! The function loops over all the gradient values to check whether their signs match the sign of the minimum value
+  DO i=2,dim
+    CurrentSign = SIGN(1.0_dp,GradPot(i))
+    IF(CurrentSign .NE. Sign) THEN
+      MinGrad = 0.0_dp
+      EXIT
+    ELSE
+      MinGrad = MIN(MinGrad, ABS(GradPot(i)))
+    END IF
+  END DO
+  
+  MinGrad = sign * MinGrad
+  END FUNCTION minmod
+  
   
   !-------------------------------------------------------------------------
   !> The routine returns the possible intersection of a secondary element 
@@ -8600,7 +8642,7 @@ RETURN
   
 
 !------------------------------------------------------------------------------
-END MODULE ParticleUtils
+END MODULE MyParticleUtils
 !------------------------------------------------------------------------------
 
 !> \}
