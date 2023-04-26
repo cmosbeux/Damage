@@ -11,6 +11,83 @@
 
 `Source Time Correction = Logical True`: when estimating the given source and facing dependencies automatically chooses old time from transient simulation in correct ratio.
 
+## How to use the solver in a sif file
+
+Needs a velocity as an input. 
+
+```f90
+Solver 2
+  Equation = ParticleAdvector
+  Procedure = "ParticleAdvector" "ParticleAdvector"
+
+!Relative Mesh Level = Integer -1 
+
+! Initialize particles at center of elements (as opposed to nodes)
+  Advect Elemental = Logical False
+
+  Reinitialize Particles = Logical True
+  !Particle Accurate At Face = Logical False
+
+! Timestepping strategy
+  Simulation Timestep Sizes = Logical True
+
+  Particle Dt Constant = Logical False
+  Max Timestep Intervals = Integer 10 !Accuracy largely decrease for small values
+
+! Time in average 4 steps in each element
+  Timestep Unisotropic Courant Number = Real 0.25
+  Max Timestep Size = Real 1.0e3
+
+! Give up integration if particles are tool old
+  Max Integration Time = Real 1.0e4
+
+! Integration forward in time
+  Runge Kutta = Logical False
+  
+  Velocity Gradient Correction = Logical True
+  Velocity Variable Name = String "Velocity"
+
+! Keywords for sourcing the particle
+  Source Time Correction = Logical True
+  Particle time reverse = Logical True
+
+! Show some info in the end
+  Particle Info = Logical True
+  Particle Time = Logical True
+
+! The internal variables for this solver
+  Variable 1 = String "Hpart"
+  Variable 2 = String "Particle distance"
+  Variable 3 = String "Particle time"
+  Variable 4 = String "Particle time integral"
+  
+! Absolute displacement when going back-and-forth in time. 
+! For exact this should be zero (computation bugged in parallel)
+  Variable 5 = String "Particle disp"  
+  
+ ! Distance and velocity of the particle can be computed
+  Variable 5 = String "Particle distance integral"
+  Variable 6 = String "Particle velocity abs"
+
+  Result Variable 1 = String "Hadv"
+  Result Variable 4 = String "Damage"
+
+ Particle Integral Dummy Argument = Logical True
+End
+```
+
+The source can be defined in the bodyforce. For transient simulations reinitialization of the particles, we have to setup ` Hpart = Equals Hadv` so that the new particle position/value is accounted for at the next step (this requires to `updateexport` the particle after the ParticleAdvector).
+
+```f90
+Body Force 1
+  HDG Source = Real 0.0
+
+  Particle Time Integral Source = Variable "dummy"
+    Real lua "Damage(tx[0])"
+
+  Hpart = Equals Hadv
+End
+```
 
 # II.  Simulation Setup
 
