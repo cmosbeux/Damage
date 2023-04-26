@@ -89,6 +89,13 @@ Body Force 1
 End
 ```
 
+A few additional keywords:
+
+```f90
+Initialization Mask Variable = String ...
+```
+
+
 # II.  Simulation Setup
 
 The goal of this test, based on the existing "Advection_Reaction_TestCase" is to test the Semi-Lagrangian solver.
